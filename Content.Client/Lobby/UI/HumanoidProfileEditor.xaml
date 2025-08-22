@@ -164,6 +164,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Traits -->
+                    <Label Name="TraitPointsLabel" HorizontalAlignment="Stretch" Align="Center" />
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="TraitsList" Orientation="Vertical" />
                     </ScrollContainer>

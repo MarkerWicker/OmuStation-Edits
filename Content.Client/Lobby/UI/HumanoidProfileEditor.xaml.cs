@@ -212,6 +212,7 @@ namespace Content.Client.Lobby.UI
         // CCvar.
         private int _maxNameLength;
         private bool _allowFlavorText;
+        private readonly int _maxTraits; // Omustation - Remake EE Traits System
 
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
@@ -294,6 +295,7 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _maxTraits = _cfgManager.GetCVar(CCVars.TraitsMaxTraits);
 
             ImportButton.OnPressed += args =>
             {
@@ -693,6 +695,8 @@ namespace Content.Client.Lobby.UI
             Dictionary<string, List<string>> traitGroups = new();
             List<string> defaultTraits = new();
             traitGroups.Add(TraitCategoryPrototype.Default, defaultTraits);
+
+            TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
 
             foreach (var trait in traits)
             {
