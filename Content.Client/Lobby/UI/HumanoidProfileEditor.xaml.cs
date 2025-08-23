@@ -732,25 +732,42 @@ namespace Content.Client.Lobby.UI
                     });
                 }
 
-                List<TraitPreferenceSelector?> selectors = new();
+                List<RequirementsSelector?> selectors = new(); // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
                 var selectionCount = 0;
 
                 foreach (var traitProto in categoryTraits)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
-                    var selector = new TraitPreferenceSelector(trait);
+                    // begin Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
+                    var selector = new RequirementsSelector();
 
-                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    if (selector.Preference)
+                    var selectorOptions = new[] { ("On", 0), ("Off", 1) };
+                    var selectorName = trait.Cost != 0 ? Loc.GetString(trait.Name) + " [" + trait.Cost + "]" : Loc.GetString(trait.Name);
+                    var selectorDescription = Loc.GetString(trait.Description != null ? trait.Description : "");
+
+                    selector.Setup(selectorOptions, selectorName, 200, selectorDescription);
+
+                    if (!_requirements.CheckRoleRequirements(trait.Requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
-                        selectionCount += trait.Cost;
-                        _selectedTraitCount++; // Omustation - Remake EE Traits System
+                        selector.LockRequirements(reason);
+                    }
+                    else
+                    {
+                        selector.UnlockRequirements();
                     }
 
-                    selector.PreferenceChanged += preference =>
+                    selector.Select(Profile?.TraitPreferences.Contains(trait.ID) == true ? 0 : 1);
+                    if (selector.Selected == 0)
                     {
-                        if (preference && _selectedTraitCount < _maxTraits) // Omustation - Remake EE Traits System - Maximum allowed traits functionality
+                        selectionCount += trait.Cost;
+                        _selectedTraitCount++;
+                    }
+
+                    selector.OnSelected += preference =>
+                    {
+                        if (preference == 0 && _selectedTraitCount < _maxTraits) // Omustation - Remake EE Traits System - Maximum allowed traits functionality
                         {
+                            // end Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount++; // Omustation - Remake EE Traits System
                         }
@@ -782,11 +799,13 @@ namespace Content.Client.Lobby.UI
                     if (selector == null)
                         continue;
 
-                    if (category is { MaxTraitPoints: >= 0 } &&
-                        selector.Cost + selectionCount > category.MaxTraitPoints)
-                    {
-                        selector.Checkbox.Label.FontColorOverride = Color.Red;
-                    }
+                    // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
+                    // TODO: reimplement this functionality with RequirementSelectors
+                    //if (category is { MaxTraitPoints: >= 0 } &&
+                    //    selector.Cost + selectionCount > category.MaxTraitPoints)
+                    //{
+                    //    selector.Checkbox.Label.FontColorOverride = Color.Red;
+                    //}
 
                     TraitsList.AddChild(selector);
                 }
@@ -1445,6 +1464,7 @@ namespace Content.Client.Lobby.UI
             RefreshJobs();
             // In case there's species restrictions for loadouts
             RefreshLoadouts();
+            RefreshTraits();// Omustation - Remake EE Traits - In case there's species restrictions for traits
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
             ReloadPreview();

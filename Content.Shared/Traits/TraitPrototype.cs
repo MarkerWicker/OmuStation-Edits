@@ -13,6 +13,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Roles; // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -39,6 +40,16 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public LocId? Description { get; private set; }
+
+    /// <summary>
+    /// Requirements for the trait.
+    /// </summary>
+    /// <remarks>
+    /// Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
+    /// This field is used by the humanoid profile editor to disable RequirementsSelectors when requirements are(nt) met.
+    /// </remarks>
+    [DataField] // TODO: reduce scope / access to this field
+    public HashSet<JobRequirement>? Requirements;
 
     /// <summary>
     /// Don't apply this trait to entities this whitelist IS NOT valid for.
