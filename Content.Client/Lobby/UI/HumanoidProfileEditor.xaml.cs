@@ -212,7 +212,7 @@ namespace Content.Client.Lobby.UI
         // CCvar.
         private int _maxNameLength;
         private bool _allowFlavorText;
-        private readonly int _maxTraits; // Omustation - Remake EE Traits System
+        private readonly int _maxTraits; // Omustation - Remake EE Traits System - Maximum allowed traits functionality
 
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
@@ -247,6 +247,8 @@ namespace Content.Client.Lobby.UI
         /// The work in progress profile being edited.
         /// </summary>
         public HumanoidCharacterProfile? Profile;
+
+        private int _selectedTraitCount; // Omustation - Remake EE Traits System - Maximum allowed traits functionality
 
         private List<SpeciesPrototype> _species = new();
 
@@ -681,6 +683,8 @@ namespace Content.Client.Lobby.UI
             var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
+            _selectedTraitCount = 0; // Omustation - Remake EE Traits System
+
             if (traits.Count < 1)
             {
                 TraitsList.AddChild(new Label
@@ -695,8 +699,6 @@ namespace Content.Client.Lobby.UI
             Dictionary<string, List<string>> traitGroups = new();
             List<string> defaultTraits = new();
             traitGroups.Add(TraitCategoryPrototype.Default, defaultTraits);
-
-            TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
 
             foreach (var trait in traits)
             {
@@ -740,23 +742,29 @@ namespace Content.Client.Lobby.UI
 
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
                     if (selector.Preference)
+                    {
                         selectionCount += trait.Cost;
+                        _selectedTraitCount++; // Omustation - Remake EE Traits System
+                    }
 
                     selector.PreferenceChanged += preference =>
                     {
-                        if (preference)
+                        if (preference && _selectedTraitCount < _maxTraits) // Omustation - Remake EE Traits System - Maximum allowed traits functionality
                         {
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
+                            _selectedTraitCount++; // Omustation - Remake EE Traits System
                         }
                         else
                         {
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
+                            _selectedTraitCount--; // Omustation - Remake EE Traits System
                         }
 
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
                     selectors.Add(selector);
+                    TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
                 }
 
                 // Selection counter
