@@ -90,6 +90,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
+using Content.Server.Players.PlayTimeTracking; // Omustation - Remake EE Traits System
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -120,6 +121,8 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly AdminSystem _admin = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeManager = default!; // Omustation Remake EE Traits System
+        [Dependency] private readonly IEntityManager _entityManager = default!; // Omustation - Remake EE Traits System
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -340,6 +343,31 @@ namespace Content.Server.GameTicking
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
+
+            // Start Omustation - Remake EE Traits System - block the player from spawning *serverside* if they have disallowed traits
+            // first, get all of the character's traits
+            foreach (var traitProtoId in character.TraitPreferences)
+            {
+                var traitProto = _prototypeManager.Index(traitProtoId);
+
+                // if the trait exists, and the character is not allowed to have it
+                if (traitProto != null &&
+                    !JobRequirements.TryRequirementsMet(traitProto.Requirements, _playTimeManager.GetPlayTimes(player), out var _, _entityManager, _prototypeManager, character))
+                {
+                    if (!LobbyEnabled)
+                    {
+                        JoinAsObserver(player);
+                    }
+
+                    var evNoJobs = new NoJobsAvailableSpawningEvent(player); // Used by gamerules to wipe their antag slot, if they got one
+                    RaiseLocalEvent(evNoJobs);
+
+                    _chatManager.DispatchServerMessage(player,
+                        Loc.GetString("game-ticker-player-restricted-traits-selected-when-joining"));
+                    return;
+                }
+            }
+            // End Omustation - Remake EE Traits System - block the player from spawning *serverside* if they have disallowed traits
 
             PlayerJoinGame(player, silent);
 

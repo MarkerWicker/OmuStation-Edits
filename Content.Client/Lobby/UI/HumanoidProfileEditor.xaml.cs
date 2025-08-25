@@ -747,16 +747,25 @@ namespace Content.Client.Lobby.UI
 
                     selector.Setup(selectorOptions, selectorName, 200, selectorDescription);
 
+                    selector.Select(Profile?.TraitPreferences.Contains(trait.ID) == true ? 0 : 1);
+
+                    // requirements should be checked after the profile's traits are loaded, so that traits with unmet requirements can be removed from the character.
                     if (!_requirements.CheckRoleRequirements(trait.Requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
                         selector.LockRequirements(reason);
+
+                        Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
+                        // NOTE: there is a bug in the statement above. If you select a trait that has (for example) a species requirement using a species that's allowed to have that trait,
+                        // and then you select a species that isn't allowed to have that trait, the character will still have that trait until you press the save button a second time.
+                        // If you don't hit the save button a second time, the character keeps that trait. This isn't a major issue, as the server will still prevent a player
+                        // with a restricted trait from spawning, but it is one that I'd lke to fix if possible. Do note that this also happens with the job RequirementsSelectors, so this
+                        // bug should be fixed upstream (on wizden)
                     }
                     else
                     {
                         selector.UnlockRequirements();
                     }
 
-                    selector.Select(Profile?.TraitPreferences.Contains(trait.ID) == true ? 0 : 1);
                     if (selector.Selected == 0)
                     {
                         selectionCount += trait.Cost;
