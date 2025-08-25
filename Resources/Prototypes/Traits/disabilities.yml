@@ -40,6 +40,7 @@
       - Blindable
   components:
     - type: PermanentBlindness
+  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: PoorVision
@@ -53,6 +54,7 @@
   components:
     - type: PermanentBlindness
       blindness: 4
+  traitPointCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Narcolepsy
@@ -63,6 +65,7 @@
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
       durationOfIncident: 10, 30
+  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Unrevivable
@@ -72,6 +75,7 @@
   components:
     - type: Unrevivable
       cloneable: true
+  traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Monochromancy
@@ -80,6 +84,7 @@
   category: Disabilities
   components:
   - type: BlackAndWhiteOverlay
+  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Muted
@@ -91,6 +96,7 @@
       - BorgChassis
   components:
     - type: Muted
+  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Paracusia
@@ -104,6 +110,7 @@
       maxSoundDistance: 7
       sounds:
         collection: Paracusia
+  traitPointCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: PainNumbness
@@ -112,3 +119,4 @@
   category: Disabilities
   components:
   - type: PainNumbness
+  traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost

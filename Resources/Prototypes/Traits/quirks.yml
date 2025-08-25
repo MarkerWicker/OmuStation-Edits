@@ -12,6 +12,7 @@
   category: Quirks
   components:
   - type: Pacified
+  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: LightweightDrunk
@@ -21,6 +22,7 @@
   components:
   - type: LightweightDrunk
     boozeStrengthMultiplier: 2
+  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Snoring
@@ -29,3 +31,4 @@
   category: Quirks
   components:
   - type: Snoring
+  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost

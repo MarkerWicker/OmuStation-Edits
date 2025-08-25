@@ -346,11 +346,13 @@ namespace Content.Server.GameTicking
 
             // Start Omustation - Remake EE Traits System - block the player from spawning *serverside* if they have disallowed traits
             var numSelectedTraits = 0;
+            var traitPoints = _cfg.GetCVar(CCVars.TraitsDefaultPoints);
             // first, get all of the character's traits
             foreach (var traitProtoId in character.TraitPreferences)
             {
                 var traitProto = _prototypeManager.Index(traitProtoId);
                 numSelectedTraits++;
+                traitPoints -= traitProto.TraitPointCost;
 
                 // if the trait exists, and the character is not allowed to have it
                 if (traitProto != null &&
@@ -362,7 +364,7 @@ namespace Content.Server.GameTicking
             }
 
             // if the player has more traits selected than they're allowed to select
-            if (numSelectedTraits > _cfg.GetCVar(CCVars.TraitsMaxTraits))
+            if (numSelectedTraits > _cfg.GetCVar(CCVars.TraitsMaxTraits) || traitPoints < 0)
             {
                 DoWhenCharacterDoesNotMeetTraitRestrictions(player);
                 return;

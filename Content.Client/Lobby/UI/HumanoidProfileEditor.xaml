@@ -164,7 +164,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Traits -->
+                    <!-- begin Omustation - Remake EE traits system -->
                     <Label Name="TraitPointsLabel" HorizontalAlignment="Stretch" Align="Center" />
+                    <ProgressBar Name="TraitPointsBar" MaxValue="1" Value="1" MaxHeight="8" Margin="0 5" />
+                    <!-- end Omustation - Remake EE traits system -->
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="TraitsList" Orientation="Vertical" />
                     </ScrollContainer>

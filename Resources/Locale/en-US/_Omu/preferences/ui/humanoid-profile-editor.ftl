@@ -1,1 +1,4 @@
-humanoid-profile-editor-traits-header = You have {$traits}/{$maxTraits} traits selected.
+humanoid-profile-editor-traits-header = You have {$pointsRemaining ->
+    [1] 1 point
+    *[other] {$pointsRemaining} points
+    } and {$traits} / {$maxTraits} traits

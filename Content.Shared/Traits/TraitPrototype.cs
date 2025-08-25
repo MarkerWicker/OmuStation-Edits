@@ -87,6 +87,20 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
 
+    /// <summary>
+    ///     The number of trait points required for this trait.
+    /// </summary>
+    /// <remarks
+    ///     This is an Omustation change, and is distinct from the upstream wizden cost field. This is for a few reasons:
+    ///     First, is that traits points upstream are category specific. So, if you take a trait for 2 points from the "Languages" category, it will ONLY
+    ///     use up the trait points availible to that category.
+    ///     Second, is that being able to optionally restrict the amount of selectable traits in a category AND globally might be useful for balancing.
+    ///     Third, is that I want to alter as little upstream code as possible, and if that means adding two cost fields to the trait prototype, so be it.
+    /// </remarks>
+    [DataField]
+    public int TraitPointCost = 0;
+
+
     // Einstein Engines - Language begin (remove this if trait system refactor)
     /// <summary>
     ///     The list of all Spoken Languages that this trait adds.

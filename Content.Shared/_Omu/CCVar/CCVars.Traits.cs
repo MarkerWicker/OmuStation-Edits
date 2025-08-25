@@ -9,4 +9,11 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int>
         TraitsMaxTraits = CVarDef.Create("traits.maxtraits", 14, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     The default number of trait points given to each character.
+    /// </summary>
+    public static readonly CVarDef<int>
+        TraitsDefaultPoints = CVarDef.Create("traits.defaultpoints", 10, CVar.SERVER | CVar.REPLICATED);
+
 }
