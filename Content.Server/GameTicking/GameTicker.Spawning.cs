@@ -345,27 +345,27 @@ namespace Content.Server.GameTicking
             }
 
             // Start Omustation - Remake EE Traits System - block the player from spawning *serverside* if they have disallowed traits
+            var numSelectedTraits = 0;
             // first, get all of the character's traits
             foreach (var traitProtoId in character.TraitPreferences)
             {
                 var traitProto = _prototypeManager.Index(traitProtoId);
+                numSelectedTraits++;
 
                 // if the trait exists, and the character is not allowed to have it
                 if (traitProto != null &&
                     !JobRequirements.TryRequirementsMet(traitProto.Requirements, _playTimeManager.GetPlayTimes(player), out var _, _entityManager, _prototypeManager, character))
                 {
-                    if (!LobbyEnabled)
-                    {
-                        JoinAsObserver(player);
-                    }
-
-                    var evNoJobs = new NoJobsAvailableSpawningEvent(player); // Used by gamerules to wipe their antag slot, if they got one
-                    RaiseLocalEvent(evNoJobs);
-
-                    _chatManager.DispatchServerMessage(player,
-                        Loc.GetString("game-ticker-player-restricted-traits-selected-when-joining"));
+                    DoWhenCharacterDoesNotMeetTraitRestrictions(player);
                     return;
                 }
+            }
+
+            // if the player has more traits selected than they're allowed to select
+            if (numSelectedTraits > _cfg.GetCVar(CCVars.TraitsMaxTraits))
+            {
+                DoWhenCharacterDoesNotMeetTraitRestrictions(player);
+                return;
             }
             // End Omustation - Remake EE Traits System - block the player from spawning *serverside* if they have disallowed traits
 
@@ -463,6 +463,27 @@ namespace Content.Server.GameTicking
                 character);
             RaiseLocalEvent(mob, aev, true);
         }
+
+        // begin Omustation - Remake EE Traits System
+        /// <summary>
+        ///     Called by SpawnPlayer() when a player does not meet the restrictions on their character's traits.
+        ///     Should be called immediately before a `return` statement, to prevent the player from spawning.
+        /// </summary>
+        /// <param name="player">The player who's character doesn't meet the appropriate restrictions</param>
+        private void DoWhenCharacterDoesNotMeetTraitRestrictions(ICommonSession player)
+        {
+            if (!LobbyEnabled)
+            {
+                JoinAsObserver(player);
+            }
+
+            var evNoJobs = new NoJobsAvailableSpawningEvent(player); // Used by gamerules to wipe their antag slot, if they got one
+            RaiseLocalEvent(evNoJobs);
+
+            _chatManager.DispatchServerMessage(player,
+                Loc.GetString("game-ticker-player-restricted-traits-selected-when-joining"));
+        }
+        // end Omustation - Remake EE Traits System
 
         public void Respawn(ICommonSession player)
         {
