@@ -2,3 +2,10 @@ humanoid-profile-editor-traits-header = You have {$pointsRemaining ->
     [1] 1 point
     *[other] {$pointsRemaining} points
     } and {$traits} / {$maxTraits} traits
+
+trait-category-auditory = Auditory
+trait-category-mental = Mental
+trait-category-physical = Physical
+trait-category-psionics = Psionics
+trait-category-speech = Speech
+trait-category-visual = Visual
