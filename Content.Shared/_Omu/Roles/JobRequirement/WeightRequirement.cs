@@ -1,27 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
-using Content.Shared.Traits;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.Roles;
 
-namespace Content.Shared.Roles;
+namespace Content.Shared._Omu.Roles;
 
 /// <summary>
-/// Requires a character to have, or not have, certain traits
+/// Requires a character to have a certain fixture mass
 /// </summary>
 [UsedImplicitly]
 [Serializable, NetSerializable]
 public sealed partial class WeightRequirement : JobRequirement
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-
     [DataField(required: true)]
     public float MinimumWeight = 0;
 
@@ -39,10 +35,8 @@ public sealed partial class WeightRequirement : JobRequirement
 
         var sb = new StringBuilder();
         sb.Append("[color=yellow]");
-
-        var species = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
-
-        _prototypeManager.Index(species.ID).TryGetComponent<FixturesComponent>(out var fixture, _componentFactory);
+        var species = protoManager.Index(profile.Species);
+        protoManager.Index(species.Prototype).TryGetComponent<FixturesComponent>(out var fixture, entManager.ComponentFactory);
 
         if (fixture == null)
         {
@@ -56,10 +50,12 @@ public sealed partial class WeightRequirement : JobRequirement
 
         if (!Inverted)
         {
+            reason = FormattedMessage.FromMarkupPermissive("Character weight too low");
             return fixtureMass >= MinimumWeight;
         }
         else
         {
+            reason = FormattedMessage.FromMarkupPermissive("Character weight too high");
             return fixtureMass <= MinimumWeight;
         }
     }
