@@ -30,11 +30,11 @@ public sealed partial class WeightRequirement : JobRequirement
     {
         reason = new FormattedMessage();
 
-        if (profile is null) //the profile could be null if the player is a ghost. In this case we don't need to block the role selection for ghostrole
+        //the profile could be null if the player is a ghost. In this case we don't need to block the role selection for ghostrole
+        if (profile is null)
             return true;
 
-        var sb = new StringBuilder();
-        sb.Append("[color=yellow]");
+        // get the fixure component belonging to the player's species
         var species = protoManager.Index(profile.Species);
         protoManager.Index(species.Prototype).TryGetComponent<FixturesComponent>(out var fixture, entManager.ComponentFactory);
 
@@ -43,19 +43,18 @@ public sealed partial class WeightRequirement : JobRequirement
             return false;
         }
 
+        // "fix1" is used for all collisions except for getting set on fire iirc.
         var fixtureMass = FixtureSystem.GetMassData(fixture.Fixtures["fix1"].Shape, fixture.Fixtures["fix1"].Density).Mass;
-        fixtureMass *= (profile.Width + profile.Height) / 2;
-
-        sb.Append("[/color]");
+        fixtureMass *= (profile.Width + profile.Height) / 2; // Alter the result of the fixture mass calculation based on the character's scale.
 
         if (!Inverted)
         {
-            reason = FormattedMessage.FromMarkupPermissive("Character weight too low");
+            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-below-weight", ("weight", MinimumWeight)));
             return fixtureMass >= MinimumWeight;
         }
         else
         {
-            reason = FormattedMessage.FromMarkupPermissive("Character weight too high");
+            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-above-weight", ("weight", MinimumWeight)));
             return fixtureMass <= MinimumWeight;
         }
     }
