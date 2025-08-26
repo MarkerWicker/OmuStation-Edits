@@ -34,7 +34,8 @@
   name: trait-blindness-name
   description: trait-blindness-desc
   traitGear: WhiteCane
-  category: Disabilities
+  # category: Disabilities 
+  category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   whitelist:
     components:
       - Blindable
@@ -47,7 +48,8 @@
   name: trait-poor-vision-name
   description: trait-poor-vision-desc
   traitGear: ClothingEyesPrescriptionGlasses # Goobstation
-  category: Disabilities
+  # category: Disabilities
+  category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   whitelist:
     components:
       - Blindable
@@ -60,7 +62,8 @@
   id: Narcolepsy
   name: trait-narcolepsy-name
   description: trait-narcolepsy-desc
-  category: Disabilities
+  # category: Disabilities
+  category: MentalTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
@@ -71,7 +74,8 @@
   id: Unrevivable
   name: trait-unrevivable-name
   description: trait-unrevivable-desc
-  category: Disabilities
+  # category: Disabilities
+  category: PhysicalTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: Unrevivable
       cloneable: true
@@ -81,7 +85,8 @@
   id: Monochromancy
   name: trait-monochromancy-name
   description: trait-monochromancy-desc
-  category: Disabilities
+  # category: Disabilities
+  category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
   - type: BlackAndWhiteOverlay
   traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
@@ -90,7 +95,8 @@
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
-  category: Disabilities
+  # category: Disabilities
+  category: MentalTraits # Goobstation - Remake EE Traits system - EE traits categories
   blacklist:
     components:
       - BorgChassis
@@ -102,7 +108,8 @@
   id: Paracusia
   name: trait-paracusia-name
   description: trait-paracusia-desc
-  category: Disabilities
+  # category: Disabilities
+  category: AuditoryTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: Paracusia
       minTimeBetweenIncidents: 0.1
@@ -116,7 +123,8 @@
   id: PainNumbness
   name: trait-painnumbness-name
   description: trait-painnumbness-desc
-  category: Disabilities
+  # category: Disabilities
+  category: MentalTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
   - type: PainNumbness
   traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost

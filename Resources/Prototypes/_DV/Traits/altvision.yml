@@ -12,6 +12,7 @@
   id: UltraVision
   name: trait-ultravision-name
   description: trait-ultravision-desc
+  category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: UltraVision
   traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
@@ -20,6 +21,7 @@
   id: DogVision
   name: trait-deuteranopia-name
   description: trait-deuteranopia-desc
+  category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: DogVision
   traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
