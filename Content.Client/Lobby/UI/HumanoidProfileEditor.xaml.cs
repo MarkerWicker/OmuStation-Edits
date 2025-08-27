@@ -754,7 +754,6 @@ namespace Content.Client.Lobby.UI
 
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true ? true : false;
 
-                    // requirements should be checked after the profile's traits are loaded, so that traits with unmet requirements can be removed from the character.
                     if (!_requirements.CheckRoleRequirements(trait.Requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
                         selector.LockRequirements(reason);

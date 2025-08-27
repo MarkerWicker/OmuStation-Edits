@@ -104,6 +104,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Content.Client._Omu.Lobby.Ui;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -293,6 +294,25 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         if (selected == null)
             return;
+
+        // begin Omustation - Remake EE Traits System - Warn user when they're about to save a profile with bad traits
+        foreach (var traitProto in EditedProfile.TraitPreferences)
+        {
+            var trait = _prototypeManager.Index(traitProto);
+
+            if (!_requirements.CheckRoleRequirements(trait.Requirements, EditedProfile, out var _))
+            {
+                var warningWindow = new ConfirmSaveWarningWindow(trait);
+                warningWindow.OpenCenteredLeft();
+                warningWindow.OnSaveButtonPressed += _ =>
+                {
+                    _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
+                    ReloadCharacterSetup();
+                };
+                return;
+            }
+        }
+        // end Omustation - Remake EE Traits System - Warn user when they're about to save a profile with bad traits
 
         _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
         ReloadCharacterSetup();
