@@ -15,7 +15,7 @@
   category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: UltraVision
-  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: DogVision
@@ -24,4 +24,4 @@
   category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
     - type: DogVision
-  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: 0 # Goobstation - Remake EE Traits system - global trait points cost

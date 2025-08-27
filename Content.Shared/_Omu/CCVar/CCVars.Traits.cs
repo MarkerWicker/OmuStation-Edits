@@ -8,12 +8,12 @@ public sealed partial class CCVars
     ///     The maximum number of traits that the player is allowed to select in the profile editor.
     /// </summary>
     public static readonly CVarDef<int>
-        TraitsMaxTraits = CVarDef.Create("traits.maxtraits", 14, CVar.SERVER | CVar.REPLICATED);
+        TraitsMaxTraits = CVarDef.Create("traits.max_traits", 14, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     The default number of trait points given to each character.
     /// </summary>
     public static readonly CVarDef<int>
-        TraitsDefaultPoints = CVarDef.Create("traits.defaultpoints", 10, CVar.SERVER | CVar.REPLICATED);
+        TraitsDefaultPoints = CVarDef.Create("traits.default_points", 10, CVar.SERVER | CVar.REPLICATED);
 
 }

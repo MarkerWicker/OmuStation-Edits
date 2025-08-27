@@ -19,7 +19,7 @@
     - type: BuckleOnMapInit
       prototype: VehicleWheelchair
     - type: LegsStartParalyzed
-  traitPointCost: -10 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -10 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: ByondYourPrime
@@ -28,7 +28,7 @@
   category: Disabilities
   components:
   - type: TileMovement
-  traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: MovementImpaired
@@ -42,4 +42,4 @@
   components:
     - type: MovementImpaired
       impairedSpeedMultiplier: 0.6
-  traitPointCost: -4 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -4 # Goobstation - Remake EE Traits system - global trait points cost

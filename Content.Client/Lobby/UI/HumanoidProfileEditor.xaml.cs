@@ -156,6 +156,7 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using Content.Client._Omu.Lobby.Ui.Roles; // Omustation - Remake EE Traits System - change TraitPreferenceSelector for TraitRequirementsSelector
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
@@ -300,8 +301,8 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
-            _maxTraits = _cfgManager.GetCVar(CCVars.TraitsMaxTraits);
-            _traitStartingPoints = _cfgManager.GetCVar(CCVars.TraitsDefaultPoints);
+            _maxTraits = _cfgManager.GetCVar(CCVars.TraitsMaxTraits); // Omustation - Remake EE Traits System
+            _traitStartingPoints = _cfgManager.GetCVar(CCVars.TraitsDefaultPoints); // Omustation - Remake EE Traits System
 
             ImportButton.OnPressed += args =>
             {
@@ -737,62 +738,52 @@ namespace Content.Client.Lobby.UI
                     });
                 }
 
-                List<RequirementsSelector?> selectors = new(); // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
+                List<TraitRequirementsSelector?> selectors = new(); // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
                 var selectionCount = 0;
 
                 foreach (var traitProto in categoryTraits)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     // begin Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
-                    var selector = new RequirementsSelector();
+                    var selector = new TraitRequirementsSelector();
 
-                    var selectorOptions = new[] { ("On", 0), ("Off", 1) };
                     var selectorName = trait.Cost != 0 ? Loc.GetString(trait.Name) + " [" + trait.Cost + "]" : Loc.GetString(trait.Name);
                     var selectorDescription = Loc.GetString(trait.Description != null ? trait.Description : "");
 
-                    selector.Setup(selectorOptions, selectorName, 200, selectorDescription);
+                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) ?? false;
 
-                    selector.Select(Profile?.TraitPreferences.Contains(trait.ID) == true ? 0 : 1);
-
-                    // requirements should be checked after the profile's traits are loaded, so that traits with unmet requirements can be removed from the character.
-                    if (!_requirements.CheckRoleRequirements(trait.Requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                    if (!_requirements.CheckTraitRequirements(trait, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
-                        selector.LockRequirements(reason);
-
-                        Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
-                        // NOTE: there is a bug in the statement above. If you select a trait that has (for example) a species requirement using a species that's allowed to have that trait,
-                        // and then you select a species that isn't allowed to have that trait, the character will still have that trait until you press the save button a second time.
-                        // If you don't hit the save button a second time, the character keeps that trait. This isn't a major issue, as the server will still prevent a player
-                        // with a restricted trait from spawning, but it is one that I'd lke to fix if possible. Do note that this also happens with the job RequirementsSelectors, so this
-                        // bug should be fixed upstream (on wizden)
+                        selector.LockRequirements();
                     }
                     else
                     {
                         selector.UnlockRequirements();
                     }
 
-                    if (selector.Selected == 0)
+                    selector.Setup(trait, reason);
+
+                    if (selector.Preference)
                     {
                         selectionCount += trait.Cost;
                         _selectedTraitCount++;
-                        _selectedTraitPointCount -= trait.TraitPointCost;
+                        _selectedTraitPointCount -= trait.GlobalCost;
                     }
 
-                    selector.OnSelected += preference =>
+                    selector.PreferenceChanged += preference =>
                     {
-                        if (preference == 0 &&
-                        _selectedTraitCount < _maxTraits && // make sure the player isn't selecting more traits than they're allowed
-                        _selectedTraitPointCount - trait.TraitPointCost >= 0) // make sure that the player isn't spending more trait points than they're allowed
+                        if (preference &&
+                        _selectedTraitCount < _maxTraits) // make sure the player isn't selecting more traits than they're allowed
                         {
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount++;
-                            _selectedTraitPointCount -= trait.TraitPointCost; 
+                            _selectedTraitPointCount -= trait.GlobalCost;
                         }
-                        else if (_selectedTraitPointCount + trait.TraitPointCost >= 0) // don't let a player deselect a trait if it would give them negative trait points (due to the other traits they have selected)
+                        else
                         {
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount--;
-                            _selectedTraitPointCount += trait.TraitPointCost;
+                            _selectedTraitPointCount += trait.GlobalCost;
                         }
                         // end Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
 
