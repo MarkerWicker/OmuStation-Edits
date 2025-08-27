@@ -767,7 +767,7 @@ namespace Content.Client.Lobby.UI
                     {
                         selectionCount += trait.Cost;
                         _selectedTraitCount++;
-                        _selectedTraitPointCount -= trait.TraitPointCost;
+                        _selectedTraitPointCount -= trait.GlobalCost;
                     }
 
                     selector.PreferenceChanged += preference =>
@@ -777,13 +777,13 @@ namespace Content.Client.Lobby.UI
                         {
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount++;
-                            _selectedTraitPointCount -= trait.TraitPointCost;
+                            _selectedTraitPointCount -= trait.GlobalCost;
                         }
                         else
                         {
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount--;
-                            _selectedTraitPointCount += trait.TraitPointCost;
+                            _selectedTraitPointCount += trait.GlobalCost;
                         }
                         // end Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
 

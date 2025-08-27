@@ -41,7 +41,7 @@
       - Blindable
   components:
     - type: PermanentBlindness
-  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: PoorVision
@@ -56,7 +56,7 @@
   components:
     - type: PermanentBlindness
       blindness: 4
-  traitPointCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Narcolepsy
@@ -68,7 +68,7 @@
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
       durationOfIncident: 10, 30
-  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Unrevivable
@@ -79,7 +79,7 @@
   components:
     - type: Unrevivable
       cloneable: true
-  traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Monochromancy
@@ -89,7 +89,7 @@
   category: VisualTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
   - type: BlackAndWhiteOverlay
-  traitPointCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: 0 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Muted
@@ -102,7 +102,7 @@
       - BorgChassis
   components:
     - type: Muted
-  traitPointCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -6 # Goobstation - Remake EE Traits system - global trait points cost
 
 - type: trait
   id: Paracusia
@@ -117,8 +117,8 @@
       maxSoundDistance: 7
       sounds:
         collection: Paracusia
-  traitPointCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
-
+  globalCost: -1 # Goobstation - Remake EE Traits system - global trait points cost
+  
 - type: trait
   id: PainNumbness
   name: trait-painnumbness-name
@@ -127,4 +127,4 @@
   category: MentalTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
   - type: PainNumbness
-  traitPointCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
+  globalCost: -2 # Goobstation - Remake EE Traits system - global trait points cost

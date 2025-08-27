@@ -304,7 +304,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         foreach (var traitProto in EditedProfile.TraitPreferences)
         {
             var trait = _prototypeManager.Index(traitProto);
-            traitPoints -= trait.TraitPointCost;
+            traitPoints -= trait.GlobalCost;
             numTraits++;
 
             // if the saved profile will have unmet requirements, take note of it

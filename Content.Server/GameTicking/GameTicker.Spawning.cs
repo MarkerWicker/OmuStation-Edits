@@ -352,7 +352,7 @@ namespace Content.Server.GameTicking
             {
                 var traitProto = _prototypeManager.Index(traitProtoId);
                 numSelectedTraits++;
-                traitPoints -= traitProto.TraitPointCost;
+                traitPoints -= traitProto.GlobalCost;
 
                 // if the trait exists, and the character is not allowed to have it
                 if (traitProto != null &&
