@@ -308,7 +308,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             numTraits++;
 
             // if the saved profile will have unmet requirements, take note of it
-            if (!_requirements.CheckRoleRequirements(trait.Requirements, EditedProfile, out var unmetRequirements))
+            if (!_requirements.CheckTraitRequirements(trait, EditedProfile, out var unmetRequirements))
             {
                 warnings.Add(Loc.GetString(trait.Name), unmetRequirements.ToString());
             }
