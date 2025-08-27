@@ -301,8 +301,8 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
-            _maxTraits = _cfgManager.GetCVar(CCVars.TraitsMaxTraits);
-            _traitStartingPoints = _cfgManager.GetCVar(CCVars.TraitsDefaultPoints);
+            _maxTraits = _cfgManager.GetCVar(CCVars.TraitsMaxTraits); // Omustation - Remake EE Traits System
+            _traitStartingPoints = _cfgManager.GetCVar(CCVars.TraitsDefaultPoints); // Omustation - Remake EE Traits System
 
             ImportButton.OnPressed += args =>
             {
@@ -752,7 +752,7 @@ namespace Content.Client.Lobby.UI
 
                     selector.Setup(selectorName, selectorDescription, trait.TraitPointCost);
 
-                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true ? true : false;
+                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) ?? false;
 
                     if (!_requirements.CheckRoleRequirements(trait.Requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
@@ -773,14 +773,13 @@ namespace Content.Client.Lobby.UI
                     selector.PreferenceChanged += preference =>
                     {
                         if (preference &&
-                        _selectedTraitCount < _maxTraits && // make sure the player isn't selecting more traits than they're allowed
-                        _selectedTraitPointCount - trait.TraitPointCost >= 0) // make sure that the player isn't spending more trait points than they're allowed
+                        _selectedTraitCount < _maxTraits) // make sure the player isn't selecting more traits than they're allowed
                         {
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount++;
-                            _selectedTraitPointCount -= trait.TraitPointCost; 
+                            _selectedTraitPointCount -= trait.TraitPointCost;
                         }
-                        else if (_selectedTraitPointCount + trait.TraitPointCost >= 0) // don't let a player deselect a trait if it would give them negative trait points (due to the other traits they have selected)
+                        else
                         {
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount--;
