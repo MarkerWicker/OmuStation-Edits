@@ -11,7 +11,8 @@
   id: WheelchairBound
   name: trait-wheelchair-bound-name
   description: trait-wheelchair-bound-desc
-  category: Disabilities
+  # category: Disabilities
+  category: PhysicalTraits # Goobstation - Remake EE Traits system - EE traits categories
   blacklist:
     components:
       - BorgChassis
@@ -25,7 +26,8 @@
   id: ByondYourPrime
   name: trait-tile-movement-name
   description: trait-tile-movement-desc
-  category: Disabilities
+  # category: Disabilities
+  category: PhysicalTraits # Goobstation - Remake EE Traits system - EE traits categories
   components:
   - type: TileMovement
   globalCost: -2 # Goobstation - Remake EE Traits system - global trait points cost
@@ -35,7 +37,8 @@
   name: trait-movement-impaired-name
   description: trait-movement-impaired-desc
   traitGear: Cane
-  category: Disabilities
+  # category: Disabilities
+  category: PhysicalTraits # Goobstation - Remake EE Traits system - EE traits categories
   blacklist:
     components:
     - BorgChassis
