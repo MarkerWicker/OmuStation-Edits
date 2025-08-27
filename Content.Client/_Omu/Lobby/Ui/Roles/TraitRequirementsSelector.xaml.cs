@@ -30,6 +30,9 @@ public sealed partial class TraitRequirementsSelector : BoxContainer
         set => ToggleableButton.Pressed = value;
     }
 
+    // Whether the selector should be locked. Used to prevent disabling the button while an invalid trait is selected (to allow it to be deselected)
+    private bool _locked;
+
     public TraitRequirementsSelector()
     {
         RobustXamlLoader.Load(this);
@@ -66,17 +69,24 @@ public sealed partial class TraitRequirementsSelector : BoxContainer
 
     public void LockRequirements()
     {
-        ToggleableButton.Disabled = true;
+        if (!Preference)
+            ToggleableButton.Disabled = true;
+
+        _locked = true;
     }
 
     public void UnlockRequirements()
     {
         ToggleableButton.Disabled = false;
+        _locked = false;
     }
 
     private void OnButtonToggled(BaseButton.ButtonToggledEventArgs args)
     {
         PreferenceChanged?.Invoke(Preference);
+
+        if (!Preference && _locked)
+            LockRequirements();
     }
 
 }
