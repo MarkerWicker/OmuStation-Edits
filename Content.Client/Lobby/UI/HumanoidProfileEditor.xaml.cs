@@ -750,18 +750,18 @@ namespace Content.Client.Lobby.UI
                     var selectorName = trait.Cost != 0 ? Loc.GetString(trait.Name) + " [" + trait.Cost + "]" : Loc.GetString(trait.Name);
                     var selectorDescription = Loc.GetString(trait.Description != null ? trait.Description : "");
 
-                    selector.Setup(selectorName, selectorDescription, trait.TraitPointCost);
-
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) ?? false;
 
                     if (!_requirements.CheckTraitRequirements(trait, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
-                        selector.LockRequirements(reason);
+                        selector.LockRequirements();
                     }
                     else
                     {
                         selector.UnlockRequirements();
                     }
+
+                    selector.Setup(trait, reason);
 
                     if (selector.Preference)
                     {
