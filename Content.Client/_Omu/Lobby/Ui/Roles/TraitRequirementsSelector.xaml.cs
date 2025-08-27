@@ -46,7 +46,14 @@ public sealed partial class TraitRequirementsSelector : BoxContainer
     public void Setup(TraitPrototype trait, FormattedMessage? requirementsMessage)
     {
         TraitsTitle.Text = Loc.GetString(trait.Name);
-        PointsCount.Text = trait.GlobalCost.ToString();
+        GlobalPointsCount.Text = trait.GlobalCost.ToString();
+
+        if (trait.Cost != 0)
+        {
+            PointsCount.Text = trait.Cost.ToString();
+            PointsCount.Visible = true;
+        }
+
         var tooltip = new Tooltip();
         var tooltipMessage = new FormattedMessage();
 
