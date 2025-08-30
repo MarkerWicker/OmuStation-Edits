@@ -5,6 +5,11 @@ humanoid-profile-editor-traits-header = You have {$pointsRemaining ->
 
 humanoid-profile-editor-traits-header-no-points = You have {$traits} / {$maxTraits} traits
 
+humanoid-profile-editor-traits-header-no-maxtraits = You have {$pointsRemaining ->
+    [1] 1 point
+    *[other] {$pointsRemaining} points
+    }
+
 trait-category-auditory = Auditory
 trait-category-mental = Mental
 trait-category-physical = Physical

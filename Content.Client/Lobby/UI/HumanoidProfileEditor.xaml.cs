@@ -780,7 +780,7 @@ namespace Content.Client.Lobby.UI
                     selector.PreferenceChanged += preference =>
                     {
                         if (preference &&
-                        _selectedTraitCount < _maxTraits) // make sure the player isn't selecting more traits than they're allowed
+                        (_selectedTraitCount < _maxTraits || _maxTraits <= 0)) // make sure the player isn't selecting more traits than they're allowed
                         {
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                             _selectedTraitCount++;
@@ -800,10 +800,19 @@ namespace Content.Client.Lobby.UI
                     selectors.Add(selector);
 
                     // begin Omustation - Remake EE Traits System
-                    if (_cfgManager.GetCVar(CCVars.TraitsGlobalPointsEnabled)) // show points remaining only if points are enabled
-                        TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("pointsRemaining", _selectedTraitPointCount), ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); 
+                    if (_cfgManager.GetCVar(CCVars.TraitsGlobalPointsEnabled) && _maxTraits > 0) // show points remaining only if points are enabled
+                        TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("pointsRemaining", _selectedTraitPointCount), ("traits", _selectedTraitCount), ("maxTraits", _maxTraits));
                     else
-                        TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header-no-points", ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
+                    {
+                        if (_maxTraits > 0)
+                            TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header-no-points", ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
+                        else if (_cfgManager.GetCVar(CCVars.TraitsGlobalPointsEnabled))
+                            TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header-no-maxtraits", ("pointsRemaining", _selectedTraitPointCount));
+                        else
+                            TraitPointsLabel.Text = "";
+
+                    }
+
 
                     TraitPointsBar.Value = _selectedTraitPointCount;
                     TraitPointsBar.MaxValue = _traitStartingPoints;

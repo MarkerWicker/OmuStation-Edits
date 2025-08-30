@@ -6,6 +6,7 @@ public sealed partial class CCVars
 {
     /// <summary>
     ///     The maximum number of traits that the player is allowed to select in the profile editor.
+    ///     If this value is negative, then players are allowed to select as many traits as they wish.
     /// </summary>
     public static readonly CVarDef<int>
         TraitsMaxTraits = CVarDef.Create("traits.max_traits", 14, CVar.SERVER | CVar.REPLICATED);
