@@ -39,7 +39,7 @@
   abstract: true
   components:
   - type: HarpySinger
-    ShutUpDamageThreshold: 5 # Punch does 5 damage
+#    ShutUpDamageThreshold: 5 # Punch does 5 damage #OmuStation, "A harpy would never shut up"
   - type: Instrument
     allowPercussion: false
     program: 52
@@ -104,11 +104,12 @@
       - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "ears" ]
+      - map: [ "belt" ] # Omu - Moved belt to render under OuterClothing to have it be similar with how the base drawdepth is.
       - map: [ "outerClothing" ]
+      - map: [ "beltalt" ] # Omu
       - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
+      - map: [ "back" ] # Moved it to render under the neck stuff because it felt weird to see duffels be above cloaks? Dunno, this is a easy thing to change anyway.
+      - map: [ "neck" ] 
       - map: [ "enum.HumanoidVisualLayers.Face" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -279,43 +280,3 @@
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "mask" ]
       - map: [ "head" ]
-
-- type: entity
-  parent: BaseAction
-  id: ActionHarpyPlayMidi
-  name: Play MIDI
-  description: Sing your heart out! Right click yourself to set an instrument.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    checkCanInteract: false
-    icon: _DV/Interface/Actions/harpy_sing.png
-  - type: InstantAction
-    event: !type:OpenUiActionEvent
-      key: enum.InstrumentUiKey.Key
-
-- type: entity
-  parent: BaseAction
-  id: ActionSyrinxChangeVoiceMask
-  name: Set name
-  description: Change the name others hear to something else.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    icon: _DV/Interface/Actions/harpy_syrinx.png
-    itemIconStyle: BigAction
-  - type: InstantAction
-    event: !type:VoiceMaskSetNameEvent
-
-- type: entity
-  parent: BaseAction
-  id: ActionToggleFlight
-  name: Fly
-  description: Make use of your wings to fly. Beat the flightless bird allegations.
-  components:
-  - type: Action
-    checkCanInteract: false
-    icon: { sprite: _EinsteinEngines/Interface/Actions/flight.rsi, state: flight_off }
-    iconOn: { sprite : _EinsteinEngines/Interface/Actions/flight.rsi, state: flight_on }
-  - type: InstantAction
-    event: !type:ToggleFlightEvent
