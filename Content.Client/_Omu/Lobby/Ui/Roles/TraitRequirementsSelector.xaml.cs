@@ -12,6 +12,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Client._Omu.Lobby.Ui.Roles;
 
@@ -30,12 +32,16 @@ public sealed partial class TraitRequirementsSelector : BoxContainer
         set => ToggleableButton.Pressed = value;
     }
 
+    private readonly IConfigurationManager _cfg;
+
     // Whether the selector should be locked. Used to prevent disabling the button while an invalid trait is selected (to allow it to be deselected)
     private bool _locked;
 
-    public TraitRequirementsSelector()
+    public TraitRequirementsSelector(IConfigurationManager configManager)
     {
         RobustXamlLoader.Load(this);
+
+        _cfg = configManager;
 
         ToggleableButton.OnToggled += OnButtonToggled;
     }
@@ -46,12 +52,19 @@ public sealed partial class TraitRequirementsSelector : BoxContainer
     public void Setup(TraitPrototype trait, FormattedMessage? requirementsMessage)
     {
         TraitsTitle.Text = Loc.GetString(trait.Name);
-        GlobalPointsCount.Text = trait.GlobalCost.ToString();
+
+        var showGlobalPoints = _cfg.GetCVar(CCVars.TraitsGlobalPointsEnabled);
+        if (showGlobalPoints)
+            GlobalPointsCount.Text = trait.GlobalCost.ToString();
 
         if (trait.Cost != 0)
         {
             PointsCount.Text = trait.Cost.ToString();
             PointsCount.Visible = true;
+        }
+        else if (!showGlobalPoints) // if neither category- nor global- points exist, we can remove this margin.
+        {
+            TraitsTitle.Margin = new Thickness(0, 0, 0, 0);
         }
 
         var tooltip = new Tooltip();

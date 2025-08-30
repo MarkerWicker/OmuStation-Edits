@@ -688,8 +688,15 @@ namespace Content.Client.Lobby.UI
             var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
-            _selectedTraitCount = 0; // Omustation - Remake EE Traits System
-            _selectedTraitPointCount = _traitStartingPoints; // Omustation - Remake EE Traits System
+            // begin Omustation - Remake EE Traits System
+            _selectedTraitCount = 0;
+            _selectedTraitPointCount = _traitStartingPoints;
+
+            if (!_cfgManager.GetCVar(CCVars.TraitsGlobalPointsEnabled))
+                TraitPointsBar.Visible = false;
+            else
+                TraitPointsBar.Visible = true;
+            // end Omustation - Remake EE Traits System
 
             if (traits.Count < 1)
             {
@@ -745,7 +752,7 @@ namespace Content.Client.Lobby.UI
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     // begin Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
-                    var selector = new TraitRequirementsSelector();
+                    var selector = new TraitRequirementsSelector(_cfgManager);
 
                     var selectorName = trait.Cost != 0 ? Loc.GetString(trait.Name) + " [" + trait.Cost + "]" : Loc.GetString(trait.Name);
                     var selectorDescription = Loc.GetString(trait.Description != null ? trait.Description : "");
@@ -791,9 +798,16 @@ namespace Content.Client.Lobby.UI
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
                     };
                     selectors.Add(selector);
-                    TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("pointsRemaining", _selectedTraitPointCount), ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
-                    TraitPointsBar.Value = _selectedTraitPointCount; // Omustation - Remake EE Traits System
-                    TraitPointsBar.MaxValue = _traitStartingPoints; // Omustation - Remake EE Traits System
+
+                    // begin Omustation - Remake EE Traits System
+                    if (_cfgManager.GetCVar(CCVars.TraitsGlobalPointsEnabled)) // show points remaining only if points are enabled
+                        TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header", ("pointsRemaining", _selectedTraitPointCount), ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); 
+                    else
+                        TraitPointsLabel.Text = Loc.GetString("humanoid-profile-editor-traits-header-no-points", ("traits", _selectedTraitCount), ("maxTraits", _maxTraits)); // Omustation - Remake EE Traits System
+
+                    TraitPointsBar.Value = _selectedTraitPointCount;
+                    TraitPointsBar.MaxValue = _traitStartingPoints;
+                    // end Omustation - Remake EE Traits System
                 }
 
                 // Selection counter

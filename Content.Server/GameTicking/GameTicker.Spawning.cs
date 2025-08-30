@@ -364,7 +364,7 @@ namespace Content.Server.GameTicking
             }
 
             // if the player has more traits selected than they're allowed to select
-            if (numSelectedTraits > _cfg.GetCVar(CCVars.TraitsMaxTraits) || traitPoints < 0)
+            if (numSelectedTraits > _cfg.GetCVar(CCVars.TraitsMaxTraits) || _cfg.GetCVar(CCVars.TraitsGlobalPointsEnabled) && traitPoints < 0)
             {
                 DoWhenCharacterDoesNotMeetTraitRestrictions(player);
                 return;

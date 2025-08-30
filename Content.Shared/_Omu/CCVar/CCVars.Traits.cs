@@ -11,6 +11,12 @@ public sealed partial class CCVars
         TraitsMaxTraits = CVarDef.Create("traits.max_traits", 14, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     Whether "global" trait points are a thing.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        TraitsGlobalPointsEnabled = CVarDef.Create("traits.global_points_enabled", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     The default number of trait points given to each character.
     /// </summary>
     public static readonly CVarDef<int>

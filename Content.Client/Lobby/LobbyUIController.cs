@@ -315,7 +315,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         }
 
         // make sure the player doesn't have a negative number of trait points
-        if (traitPoints < 0)
+        if (_configurationManager.GetCVar(CCVars.TraitsGlobalPointsEnabled) && traitPoints < 0)
         {
             warnings.Add(Loc.GetString("lobby-confirm-save-trait-points-problem"), Loc.GetString("lobby-confirm-save-trait-points-details", ("points", traitPoints)));
         }
