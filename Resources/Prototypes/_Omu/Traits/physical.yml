@@ -1,0 +1,20 @@
+- type: trait
+  id: MothFlight
+  name: trait-moth-flight-name
+  description: trait-moth-flight-desc
+  category: PhysicalTraits
+  components:
+  - type: Flight
+    isLayerAnimated: true
+    layer: "/Textures/Mobs/Customization/Moth/moth_wings.rsi"
+    animationKey: "Flap"
+    shaderSpeed: 3 # moth wings look VERY wrong if displaced too much or too quickly.
+    shaderMultiplier: 0.003
+  globalCost: 2
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Moth
+    - !type:WeightRequirement # big moffs are too heavy to fly
+      minimumWeight: 60
+      inverted: true
