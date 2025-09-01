@@ -18,3 +18,14 @@
     - !type:WeightRequirement # big moffs are too heavy to fly
       minimumWeight: 60
       inverted: true
+
+- type: trait
+  id: ThievingTrait
+  name: trait-thieving-name
+  description: trait-thieving-desc
+  category: PhysicalTraits
+  components:
+    - type: Thieving
+      stealthyAlertProtoId: ""
+      noiseLevel: 0 # "0" is small, per the PopupType enum
+  globalCost: 3
