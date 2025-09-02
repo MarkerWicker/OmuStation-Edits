@@ -26,6 +26,5 @@
   category: PhysicalTraits
   components:
     - type: Thieving
-      stealthyAlertProtoId: ""
       noiseLevel: 0 # "0" is small, per the PopupType enum
   globalCost: 3
