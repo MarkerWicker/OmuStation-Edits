@@ -4,6 +4,10 @@ trait-moth-flight-desc =
     Flight is faster than running; however, it is strenuous and quickly drains your stamina.
     By selecting this trait, you lose your ability to dash. 
 
+trait-singer-name = Singer
+trait-singer-desc =
+    You are naturally capable of singing simple melodies with your voice.
+
 trait-thieving-name = Thieving
 trait-thieving-desc =
     You are deft with your hands, and talented at convincing people of their belongings.
