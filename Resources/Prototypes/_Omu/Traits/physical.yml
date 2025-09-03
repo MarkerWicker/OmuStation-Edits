@@ -1,12 +1,34 @@
 - type: trait
   id: Bodybuilder
   name: trait-bodybuilder-name
-  description: trait-bodybuilder-description
+  description: trait-bodybuilder-desc
   category: PhysicalTraits
   functions:
     - !type:TraitModifyDensity
       densityModifier: 55
   globalCost: 4
+
+- type: trait
+  id: ClawsTrait
+  name: trait-claws-name
+  description: trait-claws-desc
+  category: PhysicalTraits
+  functions:
+    - !type:TraitModifyUnarmed
+      hitSound:
+        collection: AlienClaw
+      animation: WeaponArcClaw
+      damage:
+        types:
+          Slashing: 5
+  globalCost: 1
+  requirements:
+    - !type:SpeciesRequirement
+      species: # a list of species which don't have claws.
+        - Diona
+        - Human
+        - IPC
+        - Moth
 
 - type: trait
   id: MothFlight
@@ -31,6 +53,38 @@
         - Moth
     - !type:WeightRequirement # big moffs are too heavy to fly
       minimumWeight: 60
+      inverted: true
+
+- type: trait
+  id: NaturalWeaponsRemoval
+  name: trait-weapons-removal-name
+  description: trait-weapons-removal-desc
+  category: PhysicalTraits
+  functions:
+    - !type:TraitModifyUnarmed
+      hitSound:
+        collection: Punch
+      animation: WeaponArcFist
+      damage:
+        types:
+          Blunt: 5
+  globalCost: 0
+  requirements:
+    - !type:SpeciesRequirement # restricted to species only with "natural weapons" (claws that do slashing damage, talons with puncture damage, so on)
+      species: # a list of species which have damage other than blunt, basically.
+        - Arachnid
+        - Chitinid
+        - Harpy
+        - Plasmaman
+        - Reptilian
+        - Rodentia
+        - Shadowkin
+        - Tajaran
+        - Vox
+        - Vulpkanin
+    - !type:TraitsRequirement
+      traits:
+        - ClawsTrait
       inverted: true
 
 - type: trait
