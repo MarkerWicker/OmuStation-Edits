@@ -10,6 +10,10 @@
     animationKey: "Flap"
     shaderSpeed: 3 # moth wings look VERY wrong if displaced too much or too quickly.
     shaderMultiplier: 0.003
+  functions:
+    - !type:TraitRemoveComponent
+      componentsToRemove:
+        - type: DashAction
   globalCost: 2
   requirements:
     - !type:SpeciesRequirement

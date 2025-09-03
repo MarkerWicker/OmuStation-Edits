@@ -14,6 +14,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Roles; // Omustation - Remake EE Traits System - change TraitPreferenceSelector for RequirementsSelector
+using Content.Shared._Omu.Traits; // Omustation - Remake EE Traits System - Port trait functions
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -100,6 +101,14 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public int GlobalCost = 0;
 
+    /// <summary>
+    ///     Functions which should be called when this trait is added to a player.
+    /// </summary>
+    /// <remarks>
+    ///     Omustation change.
+    /// </remarks>
+    [DataField(serverOnly: true)]
+    public HashSet<TraitFunction>? Functions;
 
     // Einstein Engines - Language begin (remove this if trait system refactor)
     /// <summary>
