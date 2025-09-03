@@ -1,4 +1,14 @@
 - type: trait
+  id: Bodybuilder
+  name: trait-bodybuilder-name
+  description: trait-bodybuilder-description
+  category: PhysicalTraits
+  functions:
+    - !type:TraitModifyDensity
+      densityModifier: 55
+  globalCost: 4
+
+- type: trait
   id: MothFlight
   name: trait-moth-flight-name
   description: trait-moth-flight-desc
