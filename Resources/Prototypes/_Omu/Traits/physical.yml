@@ -20,7 +20,7 @@
       animation: WeaponArcClaw
       damage:
         types:
-          Slashing: 5
+          Slash: 5
   globalCost: 1
   requirements:
     - !type:SpeciesRequirement
