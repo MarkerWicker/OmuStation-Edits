@@ -30,6 +30,10 @@ trait-weapons-removal-desc =
     As a result, your unarmed attacks deal Blunt damage instead of the standard damage type for your species.
     This has no effect on damage dealt with any form of armed melee.
 
+trait-silent-footsteps-name = Light Step
+trait-silent-footsteps-desc =
+    You move with a gentle step, which makes your footsteps silent when not wearing any kind of shoes.
+
 trait-singer-name = Singer
 trait-singer-desc =
     You are naturally capable of singing simple melodies with your voice.

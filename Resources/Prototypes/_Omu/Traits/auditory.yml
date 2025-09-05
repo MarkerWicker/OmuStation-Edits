@@ -1,4 +1,22 @@
 - type: trait
+  id: SilentFootsteps
+  name: trait-silent-footsteps-name
+  description: trait-silent-footsteps-desc
+  category: AuditoryTraits
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: NoShoesSilentFootsteps
+  globalCost: 2
+  requirements:
+    - !type:SpeciesRequirement
+      species: #these species already have the trait inherently
+      - Felinid
+      - Tajaran
+      inverted: true
+
+- type: trait
   id: Singer
   name: trait-singer-name
   description: trait-singer-desc
