@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Goobstation - Remake EE Traits system - EE traits categories
+# Omustation - Remake EE Traits system - EE traits categories
 # - type: traitCategory
 #   id: Disabilities
 #   name: trait-category-disabilities
@@ -14,7 +14,7 @@
   name: trait-category-speech
   maxTraitPoints: 2
 
-# Goobstation - Remake EE Traits system - EE traits categories
+# Omustation - Remake EE Traits system - EE traits categories
 # - type: traitCategory
 #   id: Quirks
 #   name: trait-category-quirks

@@ -49,7 +49,7 @@
       inverted: true
       species:
         - Harpy
-    - !type:TraitsRequirement # big moffs are too heavy to fly
+    - !type:TraitsRequirement # can't sing if you can't talk
       inverted: true
       traits:
         - Muted
