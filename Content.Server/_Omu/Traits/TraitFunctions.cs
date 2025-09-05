@@ -17,7 +17,7 @@ namespace Content.Server._Omu.Traits;
 /// </remarks>
 public sealed partial class TraitRemoveComponent : TraitFunction
 {
-    [DataField, AlwaysPushInheritance]
+    [DataField(required: true), AlwaysPushInheritance]
     public ComponentRegistry ComponentsToRemove { get; private set; } = new();
 
     public override void OnPlayerSpawn(EntityUid uid,
@@ -35,11 +35,11 @@ public sealed partial class TraitRemoveComponent : TraitFunction
 /// </remarks>
 public sealed partial class TraitModifyDensity : TraitFunction
 {
-    [DataField, AlwaysPushInheritance]
+    [DataField(required: true), AlwaysPushInheritance]
     public float DensityModifier;
 
     [DataField, AlwaysPushInheritance]
-    public bool Multiply = false;
+    public bool? Multiply;
 
     public override void OnPlayerSpawn(EntityUid uid,
         IComponentFactory factory,
@@ -52,7 +52,7 @@ public sealed partial class TraitModifyDensity : TraitFunction
             return;
 
         var fixture = fixturesComponent.Fixtures["fix1"]; // As of writing, fix1 is the fixture used for practically everything.
-        var newDensity = Multiply ? fixture.Density * DensityModifier : fixture.Density + DensityModifier;
+        var newDensity = (Multiply ?? false) ? fixture.Density * DensityModifier : fixture.Density + DensityModifier;
         physicsSystem.SetDensity(uid, "fix1", fixture, newDensity);
         // SetDensity handles the Dirty.
     }
@@ -82,7 +82,7 @@ public sealed partial class TraitModifyUnarmed : TraitFunction
     //     Whether to set the power attack animation to be the same as the light attack.
     // </summary>
     [DataField, AlwaysPushInheritance]
-    public bool HeavyAnimationFromLight = true;
+    public bool? HeavyAnimationFromLight;
 
     // <summary>
     //     The damage values of unarmed damage.
@@ -122,7 +122,7 @@ public sealed partial class TraitModifyUnarmed : TraitFunction
         if (Animation != null)
             melee.Animation = Animation.Value;
 
-        if (HeavyAnimationFromLight)
+        if (HeavyAnimationFromLight ?? true)
             melee.WideAnimation = melee.Animation;
 
         if (Damage != null)
