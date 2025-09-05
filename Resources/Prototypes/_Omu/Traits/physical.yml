@@ -6,7 +6,7 @@
   components:
   - type: LightweightDrunk
     boozeStrengthMultiplier: 0.6
-    globalCost: 1
+  globalCost: 1
   requirements:
     - !type:TraitsRequirement
       traits:
