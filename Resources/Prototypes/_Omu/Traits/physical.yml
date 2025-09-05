@@ -1,4 +1,19 @@
 - type: trait
+  id: AlcoholTolerance
+  name: trait-alcohol-tolerance-name
+  description: trait-alcohol-tolerance-desc
+  category: PhysicalTraits
+  components:
+  - type: LightweightDrunk
+    boozeStrengthMultiplier: 0.6
+    globalCost: 1
+  requirements:
+    - !type:TraitsRequirement
+      traits:
+        - LightweightDrunk
+      inverted: true
+
+- type: trait
   id: Bodybuilder
   name: trait-bodybuilder-name
   description: trait-bodybuilder-desc

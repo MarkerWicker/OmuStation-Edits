@@ -1,3 +1,9 @@
+trait-alcohol-tolerance-name = Alcohol Tolerance
+trait-alcohol-tolerance-desc =
+    Your body has developed an exceptionally high level of alcohol tolerance, leaving the very beverages you consume intimidated.
+    As a result, the effects of alcohol on your cognitive functions are considerably less noticeable.
+    Note: This pertrains solely to the visual effects of intoxication, and does not affect the alchohol poisoning threshold.
+
 trait-bodybuilder-name = Bodybuilder
 trait-bodybuilder-desc =
     Through extensive training or body modification, you have achieved the pinnacle of physique.
