@@ -68,7 +68,7 @@ public sealed partial class TraitPrototype : IPrototype
     /// The components that get added to the player, when they pick this trait.
     /// </summary>
     [DataField]
-    public ComponentRegistry? Components { get; private set; } = default!;
+    public ComponentRegistry? Components { get; private set; } = default!; // Omustation - remake EE traits system - this has been made nullable in order to allow for traits which rely on just functions, instead of giving components.
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.
