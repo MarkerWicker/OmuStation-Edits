@@ -808,7 +808,7 @@ namespace Content.Client.Lobby.UI
                 var categoryPointsText = new Label
                 {
                     Text = Loc.GetString("humanoid-profile-editor-trait-count-hint", ("current", selectionCount), ("max", categoryWithPoints.MaxTraitPoints!)), // we know MaxTraitPoints isn't null here because it needs to have value in order to add this category to categoriesWithPoints
-                    FontColorOverride = Color.Gray
+                    FontColorOverride = Color.LightGray
                 };
 
                 // add the label to the category
