@@ -717,8 +717,8 @@ namespace Content.Client.Lobby.UI
                 control.DisposeAllChildren();
             }
 
-            // get all traits, ordered A-Z
-            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
+            // get all traits, ordered first alphabetically, and then by global points cost.
+            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList().OrderByDescending(t => t.GlobalCost);
 
             // setup the maxtraits and global trait points counters. These values will go up as selectors are (re)added to the UI.
             _selectedTraitCount = 0;
