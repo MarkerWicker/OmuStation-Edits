@@ -49,6 +49,7 @@
       inverted: true
       species:
         - Harpy
+        - IPC
     - !type:TraitsRequirement # can't sing if you can't talk
       inverted: true
       traits:

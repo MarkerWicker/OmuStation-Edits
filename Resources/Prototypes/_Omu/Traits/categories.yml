@@ -10,9 +10,10 @@
   id: PhysicalTraits
   name: trait-category-physical
 
-- type: traitCategory
-  id: PsionicsTraits
-  name: trait-category-psionics
+# We don't have psionics.
+#- type: traitCategory
+#  id: PsionicsTraits
+#  name: trait-category-psionics
 
 # a SpeechTraits category has already been added upstream, no need to remake it here.
 # - type: traitCategory

@@ -18,6 +18,9 @@
   name: trait-bodybuilder-name
   description: trait-bodybuilder-desc
   category: PhysicalTraits
+  blacklist:
+    components:
+      - BorgChassis
   functions:
     - !type:TraitModifyDensity
       densityModifier: 55
@@ -41,9 +44,12 @@
     - !type:SpeciesRequirement
       species: # a list of species which don't have claws.
         - Diona
+        - Dwarf
         - Human
         - IPC
         - Moth
+        - Plasmaman
+        - SlimePerson
 
 - type: trait
   id: MothFlight
@@ -89,9 +95,11 @@
       species: # a list of species which have damage other than blunt, basically.
         - Arachnid
         - Chitinid
+        - Felinid
         - Harpy
         - Plasmaman
         - Reptilian
+        - Resomi
         - Rodentia
         - Shadowkin
         - Tajaran
@@ -107,6 +115,9 @@
   name: trait-thieving-name
   description: trait-thieving-desc
   category: PhysicalTraits
+  blacklist:
+    components:
+      - BorgChassis
   components:
     - type: Thieving
       noiseLevel: 0 # "0" is small, per the PopupType enum
