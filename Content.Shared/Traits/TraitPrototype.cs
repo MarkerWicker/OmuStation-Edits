@@ -88,6 +88,7 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
 
+    // begin Omustation - Remake EE Traits System
     /// <summary>
     ///     The number of trait points required for this trait.
     /// </summary>
@@ -104,11 +105,9 @@ public sealed partial class TraitPrototype : IPrototype
     /// <summary>
     ///     Functions which should be called when this trait is added to a player.
     /// </summary>
-    /// <remarks>
-    ///     Omustation change.
-    /// </remarks>
     [DataField(serverOnly: true)]
     public HashSet<TraitFunction>? Functions;
+    // end Omustation - Remake EE Traits System
 
     // Einstein Engines - Language begin (remove this if trait system refactor)
     /// <summary>

@@ -782,6 +782,6 @@ public abstract class SharedStrippableSystem : EntitySystem
     /// </summary>
     private PopupType GetThievingNoiseLevelOrLarge(EntityUid user)
     {
-        return EntityManager.TryGetComponent<ThievingComponent>(user, out var thieving) ? thieving.NoiseLevel : PopupType.Large;
+        return TryComp<ThievingComponent>(user, out var thieving) ? thieving.NoiseLevel : PopupType.Large;
     }
 }
